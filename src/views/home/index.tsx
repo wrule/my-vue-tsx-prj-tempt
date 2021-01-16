@@ -20,10 +20,9 @@ private mounted() {
 }`.trim();
 
   private mounted() {
-    setInterval(() => {
-      this.text += '\nconsole.log(1);';
-      console.log(this.text);
-    }, 1000);
+    // setInterval(() => {
+    //   this.text += '\nconsole.log(1);';
+    // }, 1000);
   }
 
   public render(): VNode {
@@ -36,7 +35,7 @@ private mounted() {
         <XHello />
         <br />
         <div class={style.box}>
-          <XCMEditor v-model={this.text} />
+          <XCMEditor text={this.text} />
         </div>
       </div>
     );

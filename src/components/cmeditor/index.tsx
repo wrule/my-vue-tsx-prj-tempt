@@ -7,19 +7,21 @@ import 'codemirror/mode/javascript/javascript.js';
 
 @Component
 export default class XCMEditor extends Vue {
-  @Prop({ default: '' }) private readonly value!: string;
+  @Prop({ default: '' }) private readonly text!: string;
 
   private codeMirror!: CodeMirror.EditorFromTextArea;
 
-  @Watch('value', { immediate: true })
-  private handleValueChange(nv: string) {
-    this.text = nv;
+  @Watch('text')
+  private handleTextChange(nv: string) {
+    this.codeMirror.setValue(nv);
+    this.emitInput(nv);
   }
 
-  private text = '';
+  private innerText = '';
 
   @Emit('input')
   private emitInput(nv: string) {
+    console.log(nv);
     return nv;
   }
 
@@ -33,6 +35,8 @@ export default class XCMEditor extends Vue {
         // cursorHeight: 1,
         // singleCursorHeightPerLine: true,
       } as any);
+      this.codeMirror.setValue(this.text);
+      this.emitInput(this.text);
       this.codeMirror.on('change', (codeMirror) => {
         this.emitInput(codeMirror.getValue());
       });
@@ -42,7 +46,7 @@ export default class XCMEditor extends Vue {
   public render(): VNode {
     return (
       <div class={style.com}>
-        <textarea v-model={this.text} />
+        <textarea v-model={this.innerText} />
       </div>
     );
   }
