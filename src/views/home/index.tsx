@@ -3,9 +3,29 @@ import { VNode } from 'vue';
 import style from './index.module.scss';
 import logo from '@/assets/logo.png';
 import XHello from '@/components/hello';
+import XCMEditor from '@/components/cmeditor';
 
 @Component
 export default class ViewHome extends Vue {
+  private text = `
+private mounted() {
+  const textarea = this.$el.querySelector('textarea');
+  if (textarea) {
+    this.codeMirror = CodeMirror.fromTextArea(textarea, {
+      lineNumbers: true,
+      matchBrackets: true,
+      mode: 'text/typescript'
+    } as any);
+  }
+}`.trim();
+
+  private mounted() {
+    setInterval(() => {
+      this.text += '\nconsole.log(1);';
+      console.log(this.text);
+    }, 1000);
+  }
+
   public render(): VNode {
     return (
       <div class={style.view}>
@@ -14,6 +34,10 @@ export default class ViewHome extends Vue {
         <span>这是我的主页</span>
         <br />
         <XHello />
+        <br />
+        <div class={style.box}>
+          <XCMEditor v-model={this.text} />
+        </div>
       </div>
     );
   }
