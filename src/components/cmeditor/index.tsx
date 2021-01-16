@@ -13,6 +13,10 @@ export default class XCMEditor extends Vue {
 
   @Watch('text')
   private handleTextChange(nv: string) {
+    this.setValue(nv);
+  }
+
+  private setValue(nv: string) {
     this.codeMirror.setValue(nv);
     this.emitInput(nv);
   }
@@ -21,7 +25,6 @@ export default class XCMEditor extends Vue {
 
   @Emit('input')
   private emitInput(nv: string) {
-    console.log(nv);
     return nv;
   }
 
@@ -32,11 +35,8 @@ export default class XCMEditor extends Vue {
         lineNumbers: true,
         matchBrackets: true,
         mode: 'text/typescript',
-        // cursorHeight: 1,
-        // singleCursorHeightPerLine: true,
       } as any);
-      this.codeMirror.setValue(this.text);
-      this.emitInput(this.text);
+      this.setValue(this.text)
       this.codeMirror.on('change', (codeMirror) => {
         this.emitInput(codeMirror.getValue());
       });
