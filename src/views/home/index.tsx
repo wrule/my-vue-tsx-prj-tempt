@@ -66,16 +66,6 @@ exitBlockOnFail(action)
 }    
 `.trim();
 
-  private mounted() {
-    // setInterval(() => {
-    //   this.code += 'console.log(123);\n';
-    // }, 1000);
-    setTimeout(() => {
-      this.readonly = false;
-      this.lang = 'scala';
-    }, 5000);
-  }
-
   private readonly = true;
 
   private lang = '';
@@ -85,14 +75,9 @@ exitBlockOnFail(action)
       <div class={style.view}>
         <XCodeEditor
           v-model={this.code}
-          lang={this.lang}
-          readonly={this.readonly}
+          lang="scala"
+          style="height: 480px"
         />
-        {/* <img src={logo} />
-        <br />
-        <span>这是我的主页</span>
-        <br />
-        <XHello /> */}
       </div>
     );
   }
