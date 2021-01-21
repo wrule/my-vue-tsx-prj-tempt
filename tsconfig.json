@@ -5,6 +5,7 @@
     "strict": true,
     "jsx": "preserve",
     "jsxFactory": "VueTsxSupport",
+    "resolveJsonModule": true,
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
