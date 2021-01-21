@@ -70,13 +70,23 @@ exitBlockOnFail(action)
     // setInterval(() => {
     //   this.code += 'console.log(123);\n';
     // }, 1000);
+    setTimeout(() => {
+      this.readonly = false;
+      this.lang = 'scala';
+    }, 5000);
   }
+
+  private readonly = true;
+
+  private lang = '';
 
   public render(): VNode {
     return (
       <div class={style.view}>
         <XCodeEditor
           v-model={this.code}
+          lang={this.lang}
+          readonly={this.readonly}
         />
         {/* <img src={logo} />
         <br />

@@ -12,7 +12,7 @@ export default class XCodeEditor extends Vue {
   /**
    * 当前语法支持
    */
-  @Prop({ default: 'scala' }) private readonly lang!: string;
+  @Prop({ default: '' }) private readonly lang!: string;
   /**
    * 是否只读
    */
@@ -28,6 +28,24 @@ export default class XCodeEditor extends Vue {
     }
   }
 
+  @Watch('lang')
+  private handleLangChange(nv: string) {
+    // this.editor.updateOptions({
+    //   language: nv,
+    // });
+    const model = this.editor.getModel();
+    if (model) {
+      monaco.editor.setModelLanguage(model, this.lang);
+    }
+  }
+
+  @Watch('readonly')
+  private handleReadOnlyChange(nv: boolean) {
+    this.editor.updateOptions({
+      readOnly: nv,
+    });
+  }
+
   private editor!: monaco.editor.IStandaloneCodeEditor;
 
   @Emit('input')
@@ -40,12 +58,16 @@ export default class XCodeEditor extends Vue {
     return nv;
   }
 
+  /**
+   * 初始化编辑器组件
+   */
   private initEditor() {
     this.editor = monaco.editor.create(this.$el as any, {
       language: this.lang,
       value: this.code,
       fontSize: 17,
       tabSize: 2,
+      readOnly: this.readonly,
     });
     this.editor.getModel()?.onDidChangeContent((e) => {
       this.code = this.editor.getValue();
