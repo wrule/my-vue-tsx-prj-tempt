@@ -7399,6 +7399,16 @@ moment@2.24.0:
   resolved "http://npm.perfma-inc.net:80/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
+monaco-editor-esm-webpack-plugin@^2.0.0:
+  version "2.0.0"
+  resolved "http://npm.perfma-inc.net:80/monaco-editor-esm-webpack-plugin/-/monaco-editor-esm-webpack-plugin-2.0.0.tgz#e750999abfedea2255eaaaaee03fc775a1baf776"
+  integrity sha512-vpReewx94mdeql5J4/3pDZJGg8cTPlETKZLFkwLOQOWUArJ2PdHO6p0TwF51Ixb1lJ1Oj+fSBkXC8SfDG/ecAQ==
+
+monaco-editor-nls@^2.0.0:
+  version "2.0.0"
+  resolved "http://npm.perfma-inc.net:80/monaco-editor-nls/-/monaco-editor-nls-2.0.0.tgz#2643f44b3b2309ef83b17836dca5d200a81a9713"
+  integrity sha512-gQy0LxyUkvmGFRfjRaFHFDdv3UjCX2DfjoL4Dy6mhcq94r6pu2mzcCWIxJz+y7FCrQwpj+xXXUpy0ynOrmONoQ==
+
 monaco-editor-webpack-plugin@^2.1.0:
   version "2.1.0"
   resolved "http://npm.perfma-inc.net:80/monaco-editor-webpack-plugin/-/monaco-editor-webpack-plugin-2.1.0.tgz#216bd35512a282beac7befd2fcdc5adb110403ff"

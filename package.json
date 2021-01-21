@@ -13,6 +13,8 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "monaco-editor": "^0.21.3",
+    "monaco-editor-esm-webpack-plugin": "^2.0.0",
+    "monaco-editor-nls": "^2.0.0",
     "monaco-editor-webpack-plugin": "^2.1.0",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
