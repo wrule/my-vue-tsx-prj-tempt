@@ -1,7 +1,14 @@
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator';
 import { VNode } from 'vue';
 import style from './index.module.scss';
-import * as monaco from 'monaco-editor';
+
+import { setLocaleData } from 'monaco-editor-nls';
+import zhHans from 'monaco-editor-nls/locale/zh-hans.json';
+setLocaleData(zhHans);
+
+// import * as monaco from 'monaco-editor';
+// import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+const monaco = require('monaco-editor/esm/vs/editor/editor.api');
 
 @Component
 export default class XCodeEditor extends Vue {
@@ -20,7 +27,7 @@ export default class XCodeEditor extends Vue {
 
   private code = '';
 
-  private editor!: monaco.editor.IStandaloneCodeEditor;
+  private editor: any;
 
   @Watch('value', { immediate: true })
   private handleValueChange(nv: string) {
@@ -66,7 +73,7 @@ export default class XCodeEditor extends Vue {
       tabSize: 2,
       readOnly: this.readonly,
     });
-    this.editor.getModel()?.onDidChangeContent((e) => {
+    this.editor.getModel()?.onDidChangeContent((e: any) => {
       this.code = this.editor.getValue();
       this.emitInput(this.code);
       this.emitChange(this.code);
