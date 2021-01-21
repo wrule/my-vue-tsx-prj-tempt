@@ -20,6 +20,8 @@ export default class XCodeEditor extends Vue {
 
   private code = '';
 
+  private editor!: monaco.editor.IStandaloneCodeEditor;
+
   @Watch('value', { immediate: true })
   private handleValueChange(nv: string) {
     if (nv !== this.code) {
@@ -30,9 +32,6 @@ export default class XCodeEditor extends Vue {
 
   @Watch('lang')
   private handleLangChange(nv: string) {
-    // this.editor.updateOptions({
-    //   language: nv,
-    // });
     const model = this.editor.getModel();
     if (model) {
       monaco.editor.setModelLanguage(model, this.lang);
@@ -45,8 +44,6 @@ export default class XCodeEditor extends Vue {
       readOnly: nv,
     });
   }
-
-  private editor!: monaco.editor.IStandaloneCodeEditor;
 
   @Emit('input')
   private emitInput(nv: string) {
