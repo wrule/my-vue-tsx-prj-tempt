@@ -7,6 +7,20 @@ module.exports = {
     // proxy: { },
   },
   configureWebpack: {
-    plugins: [new MonacoWebpackPlugin()]
+    plugins: [new MonacoWebpackPlugin({
+      languages: [
+        'xml',
+        'html',
+        'scala',
+        'shell',
+        'sql',
+        'json',
+        'java',
+        'javascript',
+        'typescript',
+        'yaml',
+        'mysql',
+      ],
+    })]
   },
 };
