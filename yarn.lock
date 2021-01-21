@@ -7399,6 +7399,18 @@ moment@2.24.0:
   resolved "http://npm.perfma-inc.net:80/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
+monaco-editor-webpack-plugin@^2.1.0:
+  version "2.1.0"
+  resolved "http://npm.perfma-inc.net:80/monaco-editor-webpack-plugin/-/monaco-editor-webpack-plugin-2.1.0.tgz#216bd35512a282beac7befd2fcdc5adb110403ff"
+  integrity sha512-DG7Dpo/ItWEOl/BG2egc/UIiHoCbHjq0EOF0E6eJQT+6QNZBOfSVU4GxaXG+kQJXB8rauxli96Xp1ITnNLZtSw==
+  dependencies:
+    loader-utils "^2.0.0"
+
+monaco-editor@^0.21.3:
+  version "0.21.3"
+  resolved "http://npm.perfma-inc.net:80/monaco-editor/-/monaco-editor-0.21.3.tgz#3381b66614b64d1c5e3b77dd5564ad496d1b4e5d"
+  integrity sha512-9N7wATLpi+googstvtm6IKg97vPQ77FDYEpkow5tLriM/VJ0DaTRyUP4UVzcoH7KlPDX+e/rE7/imcOUeGkT6g==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "http://npm.perfma-inc.net:80/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
