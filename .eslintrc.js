@@ -25,5 +25,6 @@ module.exports = {
         jest: true
       }
     }
-  ]
+  ],
+  exclude: [/node_modules[\\\/]monaco-editor[\\\/]esm/],
 }

@@ -3,6 +3,7 @@ import { VNode } from 'vue';
 import style from './index.module.scss';
 import logo from '@/assets/logo.png';
 import XHello from '@/components/hello';
+import XCodeEditor from '@/components/codeEditor';
 
 @Component
 export default class ViewHome extends Vue {
@@ -14,6 +15,9 @@ export default class ViewHome extends Vue {
         <span>这是我的主页</span>
         <br />
         <XHello />
+        <XCodeEditor
+          style="height: 320px"
+        />
       </div>
     );
   }
