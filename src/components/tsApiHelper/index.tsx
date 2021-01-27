@@ -9,7 +9,8 @@ export default class XTsApiHelper extends Vue {
   private form: any = {};
 
   private rules: any = {
-    name: [{ required: true, message: '请输入群组名称', trigger: 'blur', }],
+    address: [{ required: true, message: '请输入请求地址', trigger: 'blur', }],
+    responseJSON: [{ required: true, message: '请输入Response JSON', trigger: 'blur', }],
   };
 
   public render(): VNode {
@@ -17,15 +18,17 @@ export default class XTsApiHelper extends Vue {
       <div class={style.com}>
         <div class={style.left}>
           <a-form-model
-            ref="form"
+            ref="formIn"
             props={{
               model: this.form,
             }}
             rules={this.rules}
             layout="vertical">
             <a-form-model-item
-              label="请求地址">
+              label="请求地址"
+              prop="address">
               <a-input
+                v-model={this.form.address}
                 placeholder="请输入请求地址 如：xsea/scene/querySceneDetail">
                 <a-select
                   slot="addonBefore"

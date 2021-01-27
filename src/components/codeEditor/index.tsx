@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator';
 import { VNode } from 'vue';
 import style from './index.module.scss';
@@ -38,7 +39,7 @@ export default class XCodeEditor extends Vue {
   private handleLangChange(nv: string) {
     const model = this.editor.getModel();
     if (model) {
-      monaco.editor.setModelLanguage(model, this.lang);
+      monaco.editor.setModelLanguage(model, nv);
     }
   }
 
@@ -59,6 +60,9 @@ export default class XCodeEditor extends Vue {
     return nv;
   }
 
+  @Emit('blur')
+  private emitBlur() { }
+
   /**
    * 初始化编辑器组件
    */
@@ -70,10 +74,13 @@ export default class XCodeEditor extends Vue {
       tabSize: 2,
       readOnly: this.readonly,
     });
-    this.editor.getModel()?.onDidChangeContent((e) => {
+    this.editor.getModel()?.onDidChangeContent(() => {
       this.code = this.editor.getValue();
       this.emitInput(this.code);
       this.emitChange(this.code);
+    });
+    this.editor.onDidBlurEditorWidget(() => {
+      this.emitBlur();
     });
   }
 
@@ -84,7 +91,8 @@ export default class XCodeEditor extends Vue {
   public render(): VNode {
     return (
       <div
-        class={style.com}>
+        class={style.com}
+        onBlur={() => console.log(1234)}>
         <div
           class={style.container}>
         </div>
