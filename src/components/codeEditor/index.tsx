@@ -70,7 +70,7 @@ export default class XCodeEditor extends Vue {
     this.editor = monaco.editor.create(this.$el as any, {
       language: this.lang,
       value: this.code,
-      fontSize: 17,
+      fontSize: 16,
       tabSize: 2,
       readOnly: this.readonly,
     });
