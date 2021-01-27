@@ -1,0 +1,13 @@
+.com {
+  display: flex;
+  .left {
+    flex: 1;
+  }
+  .middle {
+    min-width: 200px;
+    text-align: center;
+  }
+  .right {
+    flex: 1;
+  }
+}

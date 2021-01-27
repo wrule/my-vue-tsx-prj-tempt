@@ -26,5 +26,5 @@ module.exports = {
       }
     }
   ],
-  exclude: [/node_modules[\\\/]monaco-editor[\\\/]esm/],
+  // exclude: [/node_modules[\\\/]monaco-editor[\\\/]esm/],
 }
