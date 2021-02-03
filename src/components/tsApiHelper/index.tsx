@@ -24,26 +24,45 @@ export default class XTsApiHelper extends Vue {
   };
 
   private formOut = {
+    name: '',
     decApiCode: '',
-    exDefApiCode: '',
+    exDefApiCode: `
+export const distribute = (params: any): D.IDistributeRsp =>
+  http.post('xsea/scene/distribute', params) as any;
+`,
     exUseApiCode: '',
     exImportCode: '',
   };
 
   private handleGenerateClick() {
+    // 生成名称
+    this.formOut.name = this.getLastNameByPath(this.formIn.apiPath);
+    // 生成Response声明代码
     this.formOut.decApiCode = '';
     const structRsp = this.shuji.Infer(
-      `${this.autoApiName}Rsp`,
+      `${this.formOut.name}Rsp`,
       JSON.parse(this.formIn.responseJSON),
     );
     this.formOut.decApiCode += structRsp.TsTestCode;
+    // 生成Request声明代码
     if (this.formIn.requestJSON.trim()) {
       const structReq = this.shuji.Infer(
-        `${this.autoApiName}Req`,
+        `${this.formOut.name}Req`,
         JSON.parse(this.formIn.requestJSON),
       );
       this.formOut.decApiCode += `\n\n${structReq.TsTestCode}`;
     }
+  }
+
+  private getLastNameByPath(pathStr: string) {
+    const segs = pathStr.split(/[\\\/]+/);
+    return segs[segs.length - 1] || 'xxx';
+  }
+
+  private getDefApiCode(
+    apiPath: string,
+  ) {
+
   }
 
   private get autoApiName() {
@@ -123,6 +142,7 @@ export default class XTsApiHelper extends Vue {
               label="生成名称"
               prop="name">
               <a-input
+                v-model={this.formOut.name}
                 placeholder="请输入定制化名称"
               />
             </a-form-model-item>
