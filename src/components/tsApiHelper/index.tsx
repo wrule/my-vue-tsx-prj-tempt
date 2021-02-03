@@ -4,6 +4,7 @@ import { VNode } from 'vue';
 import style from './index.module.scss';
 import XCodeEditor from '@/components/codeEditor';
 import Shuji from '@wrule/shuji';
+import URIJS from 'urijs';
 
 @Component
 export default class XTsApiHelper extends Vue {
@@ -54,9 +55,8 @@ export const distribute = (params: any): D.IDistributeRsp =>
     }
   }
 
-  private getLastNameByPath(pathStr: string) {
-    const segs = pathStr.split(/[\\\/]+/);
-    return segs[segs.length - 1] || 'xxx';
+  private getLastNameByPath(apiPath: string) {
+    return URIJS(apiPath).filename() || 'xxx';
   }
 
   private getDefApiCode(
