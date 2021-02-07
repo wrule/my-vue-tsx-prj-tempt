@@ -3,6 +3,7 @@ import { IConfig } from "./iConfig";
 import { IFormIn } from "./iFormIn";
 import Shuji from '@wrule/shuji';
 import URIJS from 'urijs';
+import { Struct } from "@wrule/shuji/dist/struct";
 
 const shuji = new Shuji();
 
@@ -23,10 +24,10 @@ function getName(form: IFormIn) {
 function getDefCode(
   form: IFormIn,
   config: IConfig,
+  name: string,
   rspName: string,
   reqName: string,
 ) {
-  const name = getName(form);
   const pathString = '';
   const hasReq = form.reqJson.trim().length > 0;
   const isGet = form.apiMethod === 'get';
@@ -34,9 +35,9 @@ function getDefCode(
 /**
  * 此文件为index.ts，indexd.ts为同目录下模型声明文件
  */
-import * as ${config.defName} from './indexd';
+import * as ${config.decName} from './indexd';
 
-export const ${name} = (params: ${hasReq ? `${config.defName}.${reqName}` : 'any'}): ${config.defName}.${rspName} =>
+export const ${name} = (params: ${hasReq ? `${config.decName}.${reqName}` : 'any'}): ${config.decName}.${rspName} =>
   ${config.axiosName}.${form.apiMethod}('${pathString}', ${isGet && '{ '}params${isGet && ' }'}) as any;
 `.trim();
 }
@@ -51,15 +52,24 @@ export function Generate(
     useCode: '',
     importCode: '',
   };
-  const name = getName(form);
-
+  const apiName = getName(form);
+  let rspStruct!: Struct;
+  let reqStruct!: Struct;
   if (form.rspJson.trim()) {
-    rst.decCode += shuji.Infer(`${name}Rsp`, JSON.parse(form.rspJson));
+    rspStruct = shuji.Infer(`${name}Rsp`, JSON.parse(form.rspJson));
+    rst.decCode += rspStruct.TsTestCode;
   }
   if (form.reqJson.trim()) {
+    reqStruct = shuji.Infer(`${name}Rep`, JSON.parse(form.reqJson));
     rst.decCode += '\n\n';
-    rst.decCode += shuji.Infer(`${name}Rep`, JSON.parse(form.reqJson));
+    rst.decCode += reqStruct.TsTestCode;
   }
-
+  rst.defCode = getDefCode(
+    form,
+    config,
+    apiName,
+    rspStruct?.TsName,
+    reqStruct?.TsName,
+  );
   return rst;
 }

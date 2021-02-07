@@ -4,11 +4,11 @@
  */
 export interface IConfig {
   /**
-   * 引入定义名称
+   * 模型声明的引入名称
    */
-  defName: string;
+  decName: string;
   /**
-   * 引入API名称
+   * API定义的引入名称
    */
   apiName: string;
   /**
