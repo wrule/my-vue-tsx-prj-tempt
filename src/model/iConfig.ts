@@ -15,4 +15,8 @@ export interface IConfig {
    * axios实例名称
    */
   axiosName: string;
+  /**
+   * API路径前部裁剪个数
+   */
+  apiPathTrimNum: number;
 }

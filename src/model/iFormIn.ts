@@ -1,6 +1,6 @@
 
 /**
- * 输入表单
+ * 输入表单定义
  */
 export interface IFormIn {
   /**
@@ -19,4 +19,8 @@ export interface IFormIn {
    * 请求JSON
    */
   reqJson: string;
+  /**
+   * 自定义名称
+   */
+  customName: string;
 }
