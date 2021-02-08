@@ -58,17 +58,18 @@ function getDefCode(
   rspName: string,
   reqName: string,
 ) {
-  const pathString = '';
+  const apiPath = getAPIPath(form, config);
   const hasReq = form.reqJson.trim().length > 0;
   const isGet = form.apiMethod === 'get';
   return `
 /**
- * 此文件为index.ts，indexd.ts为同目录下模型声明文件
+ * 此文件为index.ts
+ * indexd.ts为同目录下模型声明文件
  */
 import * as ${config.decName} from './indexd';
 
 export const ${apiName} = (params: ${hasReq ? `${config.decName}.${reqName}` : 'any'}): ${config.decName}.${rspName} =>
-  ${config.axiosName}.${form.apiMethod}('${pathString}', ${isGet && '{ '}params${isGet && ' }'}) as any;
+  ${config.axiosName}.${form.apiMethod}('${apiPath}', ${isGet && '{ '}params${isGet && ' }'}) as any;
 `.trim();
 }
 
@@ -76,7 +77,7 @@ export function Generate(
   form: IFormIn,
   config: IConfig,
 ): IFormOut {
-  let rst: IFormOut = {
+  const rst: IFormOut = {
     decCode: '',
     defCode: '',
     useCode: '',
@@ -86,11 +87,11 @@ export function Generate(
   let rspStruct!: Struct;
   let reqStruct!: Struct;
   if (form.rspJson.trim()) {
-    rspStruct = shuji.Infer(`${name}Rsp`, JSON.parse(form.rspJson));
+    rspStruct = shuji.Infer(`${apiName}Rsp`, JSON.parse(form.rspJson));
     rst.decCode += rspStruct.TsTestCode;
   }
   if (form.reqJson.trim()) {
-    reqStruct = shuji.Infer(`${name}Rep`, JSON.parse(form.reqJson));
+    reqStruct = shuji.Infer(`${apiName}Rep`, JSON.parse(form.reqJson));
     rst.decCode += '\n\n';
     rst.decCode += reqStruct.TsTestCode;
   }

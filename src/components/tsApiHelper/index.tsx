@@ -5,74 +5,54 @@ import style from './index.module.scss';
 import XCodeEditor from '@/components/codeEditor';
 import Shuji from '@wrule/shuji';
 import URIJS from 'urijs';
+import { IFormOut } from '@/model/formOut';
+import { IFormIn } from '@/model/iFormIn';
+import { Generate } from '@/model/generator';
+import { IConfig } from '@/model/iConfig';
 
 @Component
 export default class XTsApiHelper extends Vue {
 
   private shuji = new Shuji();
 
-  private formIn = {
+  private config: IConfig = {
+    decName: 'D',
+    apiName: 'API',
+    axiosName: 'http',
+    apiPathTrimNum: 1,
+  };
+
+  private formIn: IFormIn = {
+    apiMethod: 'get',
     apiPath: '',
-    responseJSON: JSON.stringify(JSON.parse(
+    rspJson: JSON.stringify(JSON.parse(
       `{"extParams":{},"object":{"defaultScriptType":"JMETER","isOnline":false,"isProtect":true,"pressAppId":"15100275897401344"},"success":true}`
     ), null, 2),
-    requestJSON: '',
+    reqJson: '',
+    customName: '',
+  };
+
+  private formOut: IFormOut = {
+    decCode: '',
+    defCode: '',
+    useCode: '',
+    importCode: '',
   };
 
   private rules: any = {
     apiPath: [{ required: true, message: '请输入请求地址', trigger: 'blur', }],
-    responseJSON: [{ required: true, message: '请输入Response JSON', trigger: 'blur', }],
-  };
-
-  private formOut = {
-    name: '',
-    decApiCode: '',
-    exDefApiCode: `
-export const distribute = (params: any): D.IDistributeRsp =>
-  http.post('xsea/scene/distribute', params) as any;
-`,
-    exUseApiCode: '',
-    exImportCode: '',
+    rspJson: [{ required: true, message: '请输入响应JSON', trigger: 'blur', }],
   };
 
   private handleGenerateClick() {
-    // 生成名称
-    this.formOut.name = this.getLastNameByPath(this.formIn.apiPath);
-    // 生成Response声明代码
-    this.formOut.decApiCode = '';
-    const structRsp = this.shuji.Infer(
-      `${this.formOut.name}Rsp`,
-      JSON.parse(this.formIn.responseJSON),
-    );
-    this.formOut.decApiCode += structRsp.TsTestCode;
-    // 生成Request声明代码
-    if (this.formIn.requestJSON.trim()) {
-      const structReq = this.shuji.Infer(
-        `${this.formOut.name}Req`,
-        JSON.parse(this.formIn.requestJSON),
-      );
-      this.formOut.decApiCode += `\n\n${structReq.TsTestCode}`;
-    }
-  }
-
-  private getLastNameByPath(apiPath: string) {
-    return URIJS(apiPath).filename() || 'xxx';
-  }
-
-  private getDefApiCode(
-    apiPath: string,
-  ) {
-
-  }
-
-  private get autoApiName() {
-    const segs = this.formIn.apiPath.split(/[\\\/]+/);
-    return segs[segs.length - 1] || 'myApi';
-  }
-
-  private mounted() {
-    const nini = URIJS('http://192.168.50.139:8080/api/xsea/machineStatistic/listWorkerMachine');
-    console.log(nini.segmentCoded());
+    (this.$refs.formIn as any).validate((valid: any) => {
+      console.log(valid);
+      if (valid) {
+        console.log('验证成功');
+        this.formOut = Generate(this.formIn, this.config);
+      }
+      return !!valid;
+    });
   }
 
   public render(): VNode {
@@ -93,6 +73,7 @@ export const distribute = (params: any): D.IDistributeRsp =>
                 v-model={this.formIn.apiPath}
                 placeholder="请输入请求地址 如：xsea/scene/querySceneDetail">
                 <a-select
+                  v-model={this.formIn.apiMethod}
                   slot="addonBefore"
                   default-value="post"
                   style="width: 90px">
@@ -116,7 +97,7 @@ export const distribute = (params: any): D.IDistributeRsp =>
               prop="responseJSON">
               <XCodeEditor
                 lang="json"
-                v-model={this.formIn.responseJSON}
+                v-model={this.formIn.rspJson}
               />
             </a-form-model-item>
             <a-form-model-item
@@ -124,7 +105,7 @@ export const distribute = (params: any): D.IDistributeRsp =>
               prop="requestJSON">
               <XCodeEditor
                 lang="json"
-                v-model={this.formIn.requestJSON}
+                v-model={this.formIn.reqJson}
               />
             </a-form-model-item>
           </a-form-model>
@@ -147,7 +128,7 @@ export const distribute = (params: any): D.IDistributeRsp =>
               label="生成名称"
               prop="name">
               <a-input
-                v-model={this.formOut.name}
+                v-model={this.formIn.customName}
                 placeholder="请输入定制化名称"
               />
             </a-form-model-item>
@@ -155,28 +136,28 @@ export const distribute = (params: any): D.IDistributeRsp =>
               label="类型声明代码">
               <XCodeEditor
                 lang="typescript"
-                v-model={this.formOut.decApiCode}
+                v-model={this.formOut.decCode}
               />
             </a-form-model-item>
             <a-form-model-item
               label="代码样例（定义API）">
               <XCodeEditor
                 lang="typescript"
-                v-model={this.formOut.exDefApiCode}
+                v-model={this.formOut.defCode}
               />
             </a-form-model-item>
             <a-form-model-item
               label="代码样例（使用API）">
               <XCodeEditor
                 lang="typescript"
-                v-model={this.formOut.exUseApiCode}
+                v-model={this.formOut.useCode}
               />
             </a-form-model-item>
             <a-form-model-item
               label="代码样例（引入具体类型）">
               <XCodeEditor
                 lang="typescript"
-                v-model={this.formOut.exImportCode}
+                v-model={this.formOut.importCode}
               />
             </a-form-model-item>
           </a-form-model>
