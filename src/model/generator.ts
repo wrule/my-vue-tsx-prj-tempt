@@ -21,10 +21,18 @@ function getName(form: IFormIn) {
   return rst || 'xxx';
 }
 
+/**
+ * 获取API定义代码
+ * @param form 输入表单
+ * @param config 输入配置
+ * @param apiName API名称 
+ * @param rspName 响应模型名称
+ * @param reqName 请求模型名称
+ */
 function getDefCode(
   form: IFormIn,
   config: IConfig,
-  name: string,
+  apiName: string,
   rspName: string,
   reqName: string,
 ) {
@@ -37,7 +45,7 @@ function getDefCode(
  */
 import * as ${config.decName} from './indexd';
 
-export const ${name} = (params: ${hasReq ? `${config.decName}.${reqName}` : 'any'}): ${config.decName}.${rspName} =>
+export const ${apiName} = (params: ${hasReq ? `${config.decName}.${reqName}` : 'any'}): ${config.decName}.${rspName} =>
   ${config.axiosName}.${form.apiMethod}('${pathString}', ${isGet && '{ '}params${isGet && ' }'}) as any;
 `.trim();
 }
