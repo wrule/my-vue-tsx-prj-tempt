@@ -48,8 +48,11 @@ export default class XTsApiHelper extends Vue {
     (this.$refs.formIn as any).validate((valid: any) => {
       console.log(valid);
       if (valid) {
-        console.log('验证成功');
         this.formOut = Generate(this.formIn, this.config);
+        this.$notification.success({
+          message: 'API代码生成成功',
+          description: '可根据需要复制到项目中',
+        });
       }
       return !!valid;
     });
@@ -101,7 +104,7 @@ export default class XTsApiHelper extends Vue {
               />
             </a-form-model-item>
             <a-form-model-item
-              label="Request JSON（接口请求的JSON数据，可不填）"
+              label="Request JSON（接口请求的JSON数据，如不需要建立入参模型可不填）"
               prop="requestJSON">
               <XCodeEditor
                 lang="json"
