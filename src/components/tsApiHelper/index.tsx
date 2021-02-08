@@ -114,7 +114,7 @@ export default class XTsApiHelper extends Vue {
           </a-form-model>
         </div>
         <div class={style.middle}>
-          <a-affix offsetTop={203}>
+          <a-affix offsetTop={223}>
             <a-button
               type="primary"
               onClick={this.handleGenerateClick}>
