@@ -23,7 +23,7 @@ export default class XTsApiHelper extends Vue {
   };
 
   private formIn: IFormIn = {
-    apiMethod: 'get',
+    apiMethod: 'post',
     apiPath: '',
     rspJson: JSON.stringify(JSON.parse(
       `{"extParams":{},"object":{"defaultScriptType":"JMETER","isOnline":false,"isProtect":true,"pressAppId":"15100275897401344"},"success":true}`
@@ -80,18 +80,13 @@ export default class XTsApiHelper extends Vue {
                   slot="addonBefore"
                   default-value="post"
                   style="width: 90px">
-                  <a-select-option value="post">
-                    POST
-                  </a-select-option>
-                  <a-select-option value="get">
-                    GET
-                  </a-select-option>
-                  <a-select-option value="put">
-                    PUT
-                  </a-select-option>
-                  <a-select-option value="delete">
-                    DELETE
-                  </a-select-option>
+                  <a-select-option value="post">POST</a-select-option>
+                  <a-select-option value="get">GET</a-select-option>
+                  <a-select-option value="put">PUT</a-select-option>
+                  <a-select-option value="delete">DELETE</a-select-option>
+                  <a-select-option value="patch">PATCH</a-select-option>
+                  <a-select-option value="head">HEAD</a-select-option>
+                  <a-select-option value="options">OPTIONS</a-select-option>
                 </a-select>
               </a-input>
             </a-form-model-item>
