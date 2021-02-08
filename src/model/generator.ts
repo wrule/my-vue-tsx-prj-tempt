@@ -7,6 +7,10 @@ import { Struct } from "@wrule/shuji/dist/struct";
 
 const shuji = new Shuji();
 
+/**
+ * 获取API名称
+ * @param form 输入表单
+ */
 function getName(form: IFormIn) {
   let rst = '';
   try {
@@ -19,6 +23,24 @@ function getName(form: IFormIn) {
     console.error(e);
   }
   return rst || 'xxx';
+}
+
+/**
+ * 获取裁剪之后的API路径
+ * @param form 输入表单
+ * @param config 输入配置
+ */
+function getAPIPath(
+  form: IFormIn,
+  config: IConfig,
+) {
+  const uri = URIJS(form.apiPath);
+  const segs = uri.normalizePath().segmentCoded();
+  const cutSegs = segs.slice(config.apiPathTrimNum);
+  if (cutSegs.length > 0) {
+    return cutSegs.join('/');
+  }
+  return segs.join('/');
 }
 
 /**

@@ -70,6 +70,11 @@ export const distribute = (params: any): D.IDistributeRsp =>
     return segs[segs.length - 1] || 'myApi';
   }
 
+  private mounted() {
+    const nini = URIJS('http://192.168.50.139:8080/api/xsea/machineStatistic/listWorkerMachine');
+    console.log(nini.segmentCoded());
+  }
+
   public render(): VNode {
     return (
       <div class={style.com}>
