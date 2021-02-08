@@ -25,9 +25,7 @@ export default class XTsApiHelper extends Vue {
   private formIn: IFormIn = {
     apiMethod: 'post',
     apiPath: '',
-    rspJson: JSON.stringify(JSON.parse(
-      `{"extParams":{},"object":{"defaultScriptType":"JMETER","isOnline":false,"isProtect":true,"pressAppId":"15100275897401344"},"success":true}`
-    ), null, 2),
+    rspJson: '',
     reqJson: '',
     customName: '',
   };
@@ -78,7 +76,6 @@ export default class XTsApiHelper extends Vue {
                 <a-select
                   v-model={this.formIn.apiMethod}
                   slot="addonBefore"
-                  default-value="post"
                   style="width: 90px">
                   <a-select-option value="post">POST</a-select-option>
                   <a-select-option value="get">GET</a-select-option>
@@ -92,7 +89,7 @@ export default class XTsApiHelper extends Vue {
             </a-form-model-item>
             <a-form-model-item
               label="Response JSON（接口返回的JSON数据）"
-              prop="responseJSON">
+              prop="rspJson">
               <XCodeEditor
                 lang="json"
                 v-model={this.formIn.rspJson}
@@ -133,6 +130,7 @@ export default class XTsApiHelper extends Vue {
             <a-form-model-item
               label="类型声明代码">
               <XCodeEditor
+                readonly={true}
                 lang="typescript"
                 v-model={this.formOut.decCode}
               />
@@ -140,6 +138,7 @@ export default class XTsApiHelper extends Vue {
             <a-form-model-item
               label="代码样例（定义API）">
               <XCodeEditor
+                readonly={true}
                 lang="typescript"
                 v-model={this.formOut.defCode}
               />
@@ -147,6 +146,7 @@ export default class XTsApiHelper extends Vue {
             <a-form-model-item
               label="代码样例（使用API）">
               <XCodeEditor
+                readonly={true}
                 lang="typescript"
                 v-model={this.formOut.useCode}
               />
@@ -154,6 +154,7 @@ export default class XTsApiHelper extends Vue {
             <a-form-model-item
               label="代码样例（引入具体类型）">
               <XCodeEditor
+                readonly={true}
                 lang="typescript"
                 v-model={this.formOut.importCode}
               />

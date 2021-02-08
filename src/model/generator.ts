@@ -1,6 +1,6 @@
-import { IFormOut } from "./formOut";
-import { IConfig } from "./iConfig";
-import { IFormIn } from "./iFormIn";
+import { IFormOut } from './formOut';
+import { IConfig } from './iConfig';
+import { IFormIn } from './iFormIn';
 import Shuji from '@wrule/shuji';
 import URIJS from 'urijs';
 import { Struct } from "@wrule/shuji/dist/struct";
@@ -73,6 +73,23 @@ export const ${apiName} = (params: ${hasReq ? `${config.decName}.${reqName}` : '
 `.trim();
 }
 
+function getUseCode(
+  config: IConfig,
+  apiName: string,
+) {
+  return `
+import * as ${config.apiName} from 'xxx';
+
+private async getSomeData() {
+  const rsp = await ${config.apiName}.${apiName}();
+  if (rsp.success) {
+    return rsp.object;
+  }
+  return null;
+}
+`.trim();
+}
+
 export function Generate(
   form: IFormIn,
   config: IConfig,
@@ -102,5 +119,6 @@ export function Generate(
     rspStruct?.TsName,
     reqStruct?.TsName,
   );
+  rst.useCode = getUseCode(config, apiName);
   return rst;
 }
