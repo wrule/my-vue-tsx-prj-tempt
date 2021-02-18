@@ -2,34 +2,42 @@ import { Component, Vue, Prop, Watch, Emit } from 'vue-property-decorator';
 import { VNode } from 'vue';
 import style from './index.module.scss';
 import { Chart } from '@antv/g2';
-import jsonData from './rsp.json';
+import dentData from './data/dent.json';
+import adaData from './data/ada.json';
+import btcData from './data/btc.json';
+import ethData from './data/eth.json';
+import eosData from './data/eos.json';
+import linkData from './data/link.json';
+import dogeData from './data/doge.json';
 
 @Component
 export default class XLine extends Vue {
 
   private chart: Chart = null as any;
 
-  private dataSource: any[] = JSON.parse(`[${jsonData.value}]`);
 
   private get autoDataSource() {
-    return this.dataSource.map((item) => ({
+    return this.convert(adaData, 'ada')
+      .concat(this.convert(dentData, 'dent'))
+      .concat(this.convert(btcData, 'btc'))
+      .concat(this.convert(ethData, 'eth'))
+      .concat(this.convert(eosData, 'eos'))
+      .concat(this.convert(linkData, 'link'))
+      .concat(this.convert(dogeData, 'doge'));
+  }
+
+  private convert(data: any, type: string) {
+    const list: any[] = JSON.parse(`[${data.value}]`);
+    return list.map((item) => ({
+      type,
       time: item[0],
       price: item[1],
     }));
   }
 
   private mounted() {
-
     console.log(this.autoDataSource);
 
-    const data = [
-      { genre: 'Sports', sold: 275 },
-      { genre: 'Strategy', sold: 115 },
-      { genre: 'Action', sold: 120 },
-      { genre: 'Shooter', sold: 350 },
-      { genre: 'Other', sold: 150 },
-    ];
-    
     this.chart = new Chart({
       container: this.$el as any, // 指定图表容器 ID
       width: 600, // 指定图表宽度
@@ -50,7 +58,7 @@ export default class XLine extends Vue {
     
     // Step 3: 创建图形语法，绘制柱状图
     // this.chart.interval().position('genre*sold');
-    this.chart.line().position('time*price');
+    this.chart.line().position('time*price').color('type');
     
     // Step 4: 渲染图表
     this.chart.render();
