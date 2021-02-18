@@ -19,9 +19,9 @@ export default class XLine extends Vue {
   private get autoDataSource() {
     return this.convert(btcData, 'btc')
       .concat(this.convert(dentData, 'dent'))
-      .concat(this.convert(btcData, 'btc'))
-      .concat(this.convert(ethData, 'eth'))
-      .concat(this.convert(eosData, 'eos'))
+      // .concat(this.convert(btcData, 'btc'))
+      // .concat(this.convert(ethData, 'eth'))
+      // .concat(this.convert(eosData, 'eos'))
       .concat(this.convert(linkData, 'link'))
       .concat(this.convert(dogeData, 'doge'));
   }
