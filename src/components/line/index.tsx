@@ -17,7 +17,7 @@ export default class XLine extends Vue {
 
 
   private get autoDataSource() {
-    return this.convert(adaData, 'ada')
+    return this.convert(btcData, 'btc')
       .concat(this.convert(dentData, 'dent'))
       .concat(this.convert(btcData, 'btc'))
       .concat(this.convert(ethData, 'eth'))
@@ -28,10 +28,17 @@ export default class XLine extends Vue {
 
   private convert(data: any, type: string) {
     const list: any[] = JSON.parse(`[${data.value}]`);
-    return list.map((item) => ({
+    const itemList = list.map((item) => ({
       type,
       time: item[0],
       price: item[1],
+    }));
+    const priceMax = Math.max(...itemList.map((item) => item.price));
+    const priceMin = Math.min(...itemList.map((item) => item.price));
+    const priceLen = priceMax - priceMin;
+    return itemList.map((item) => ({
+      ...item,
+      price: 1000 * ((item.price - priceMin) / priceLen),
     }));
   }
 
