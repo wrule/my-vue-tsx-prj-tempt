@@ -17,13 +17,13 @@ export default class XLine extends Vue {
 
 
   private get autoDataSource() {
-    return this.convert(btcData, 'btc')
-      .concat(this.convert(dentData, 'dent'))
+    return this.convert(ethData, 'eth')
+      // .concat(this.convert(dentData, 'dent'))
       // .concat(this.convert(btcData, 'btc'))
       // .concat(this.convert(ethData, 'eth'))
       // .concat(this.convert(eosData, 'eos'))
-      .concat(this.convert(linkData, 'link'))
-      .concat(this.convert(dogeData, 'doge'));
+      // .concat(this.convert(linkData, 'link'))
+      // .concat(this.convert(dogeData, 'doge'));
   }
 
   private convert(data: any, type: string) {
@@ -56,7 +56,7 @@ export default class XLine extends Vue {
     this.chart.scale('price', {
       formatter: (v, k) => {
         console.log(v, k);
-        return v * 6.5;
+        return v;
       },
     });
     
