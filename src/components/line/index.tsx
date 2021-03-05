@@ -43,7 +43,8 @@ export default class XLine extends Vue {
   }
 
   private mounted() {
-    console.log(this.autoDataSource);
+
+    this.myfunc();
 
     this.chart = new Chart({
       container: this.$el as any, // 指定图表容器 ID
@@ -55,7 +56,6 @@ export default class XLine extends Vue {
     });
     this.chart.scale('price', {
       formatter: (v, k) => {
-        console.log(v, k);
         return v;
       },
     });
@@ -69,6 +69,54 @@ export default class XLine extends Vue {
     
     // Step 4: 渲染图表
     this.chart.render();
+  }
+
+  private tryLottery(probs: number[]): number {
+    let i = 0, count = 1;
+    /* eslint-disable no-constant-condition */
+    while (true) {
+      const prob = probs[i];
+      const rnum = Math.random();
+      if (rnum <= prob) {
+        break;
+      }
+      i++;
+      if (i >= probs.length) {
+        i = 0;
+      }
+      count++;
+    }
+    return count;
+  }
+
+  private myfunc() {
+    // const max = 100000;
+    // const probs = [0.1826, 0.0747, 0.1543];
+    // const nums = Array(max).fill(0).map(() => {
+    //   return probs.map((prob) => [prob, Math.random()]).some((arys) => arys[0] >= arys[1]);
+    // });
+    // const trueNums = nums.filter((item) => item).length;
+    // console.log(trueNums / nums.length);
+
+    // const max = 1000;
+    // const nums = [0.1826, 0.0747, 0.1543];
+    // const counts = Array(max).fill(0).map(() => this.tryLottery(nums));
+    // counts.forEach((count, index) => {
+    //   console.log(`${index + 1}号用户摇了 ${count} 次摇中`);
+    // });
+    // let sum = 0;
+    // counts.forEach((num) => {
+    //   sum += num;
+    // });
+    // console.log(`所有用户平均 ${sum / max} 次摇中`);
+
+    // const aaa = Array.from(new Set(counts));
+    // aaa.sort((a, b) => a - b);
+    // aaa.forEach((count) => {
+    //   const nums = counts.filter((item) => item === count).length;
+    //   console.log(`第 ${count} 次摇中的人数: ${nums}`);
+    // });
+
   }
 
   public render(): VNode {
