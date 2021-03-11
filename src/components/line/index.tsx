@@ -43,7 +43,6 @@ export default class XLine extends Vue {
   }
 
   private mounted() {
-
     this.myfunc();
 
     this.chart = new Chart({
@@ -89,6 +88,21 @@ export default class XLine extends Vue {
     return count;
   }
 
+  private testAAA() {
+    let list: number[] = [];
+    while (
+      list.length < 3 ||
+      list.some((item) => item !== 0)
+    ) {
+      list.push(Math.random() < 0.5 ? 0 : 1);
+      const diff = list.length - 3;
+      if (diff > 0) {
+        list = list.slice(diff);
+      }
+    }
+    return Math.random() < 0.5 ? 0 : 1;
+  }
+
   private myfunc() {
     // const max = 100000;
     // const probs = [0.1826, 0.0747, 0.1543];
@@ -98,25 +112,26 @@ export default class XLine extends Vue {
     // const trueNums = nums.filter((item) => item).length;
     // console.log(trueNums / nums.length);
 
-    // const max = 1000;
-    // const nums = [0.1826, 0.0747, 0.1543];
-    // const counts = Array(max).fill(0).map(() => this.tryLottery(nums));
-    // counts.forEach((count, index) => {
-    //   console.log(`${index + 1}号用户摇了 ${count} 次摇中`);
-    // });
-    // let sum = 0;
-    // counts.forEach((num) => {
-    //   sum += num;
-    // });
-    // console.log(`所有用户平均 ${sum / max} 次摇中`);
+    const max = 1000;
+    const nums = [0.1826, 0.0747, 0.1543, 0.105, 0.06];
+    const counts = Array(max).fill(0).map(() => this.tryLottery(nums));
+    counts.forEach((count, index) => {
+      console.log(`${index + 1}号用户摇了 ${count} 次摇中`);
+    });
+    let sum = 0;
+    counts.forEach((num) => {
+      sum += num;
+    });
+    console.log(`所有用户平均 ${sum / max} 次摇中`);
 
-    // const aaa = Array.from(new Set(counts));
-    // aaa.sort((a, b) => a - b);
-    // aaa.forEach((count) => {
-    //   const nums = counts.filter((item) => item === count).length;
-    //   console.log(`第 ${count} 次摇中的人数: ${nums}`);
-    // });
+    const aaa = Array.from(new Set(counts));
+    aaa.sort((a, b) => a - b);
+    aaa.forEach((count) => {
+      const nums = counts.filter((item) => item === count).length;
+      console.log(`第 ${count} 次摇中的人数: ${nums}`);
+    });
 
+    console.log( counts.filter((num) => num <= 10).length );
   }
 
   public render(): VNode {
